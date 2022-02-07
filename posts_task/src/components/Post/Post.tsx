@@ -1,9 +1,11 @@
+export interface IPost {
+  title: string;
+  body: string;
+  author: string;
+}
+
 interface IProps {
-  item: {
-    title: string;
-    body: string;
-    author: string;
-  };
+  item: IPost;
 }
 
 export const Post = ({ item }: IProps) => {
@@ -14,7 +16,7 @@ export const Post = ({ item }: IProps) => {
         <p>{item.body}</p>
         <div>
           <p>
-            Author: <a href=''>{item.author}</a>
+            Author: <a href='/'>{item.author}</a>
           </p>
         </div>
       </div>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Post } from '../Post/Post';
+import { Post, IPost } from '../Post/Post';
 
 export const PostList = () => {
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<IPost[]>([]);
 
   useEffect(() => {
     Promise.all([
@@ -13,13 +13,11 @@ export const PostList = () => {
         response.json()
       ),
     ]).then((res) => {
-      res[0].map((post: any) => {
-        const auth = res[1].filter((auth: any) => auth.id === post.userId);
-        const newPost = [
-          { title: post.title, body: post.body, author: auth[0].name },
-        ];
-        setPosts((posts) => [...posts, newPost[0]]);
+      const newPosts = res[0].map((post: any) => {
+        const auth = res[1].find((auth: any) => auth.id === post.userId);
+        return { title: post.title, body: post.body, author: auth.name };
       });
+      setPosts(newPosts);
     });
   }, []);
 
